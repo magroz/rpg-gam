@@ -3,11 +3,13 @@ import RedHeadWalk from './assets/Female-2-Walk.png';
 
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
-const clear = () => ctx.clearRect(0, 0, 600, 600);
-const START_X = 276;
-const START_Y = 276;
+const CANVAS_W = 600;
+const CANVAS_H = 600;
 const SPRITE_W = 48;
 const SPRITE_H = 48;
+const clear = () => ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
+const START_X = CANVAS_W / 2 - SPRITE_W / 2;
+const START_Y = CANVAS_H / 2 - SPRITE_H / 2;
 const DELTA_POSITION = 12;
 const shots = 3;
 let cycle = 0;
@@ -70,7 +72,7 @@ const moveY = (position, spriteYLocal) => move('y', position, spriteYLocal);
 
 img.addEventListener('load', () => {
   setInterval(() => {
-    if (bottomPressed && pY + START_Y < 600 - SPRITE_H) {
+    if (bottomPressed && pY + START_Y < CANVAS_H - SPRITE_H) {
       moveY(DELTA_POSITION, 0);
     }
     if (upPressed && pY + START_Y > 0) {
@@ -79,7 +81,7 @@ img.addEventListener('load', () => {
     if (leftPressed && pX + START_X > 0) {
       moveX(-DELTA_POSITION, 48);
     }
-    if (rightPressed && pX + START_X < 600 - SPRITE_W) {
+    if (rightPressed && pX + START_X < CANVAS_W - SPRITE_W) {
       moveX(DELTA_POSITION, 96);
     }
     clear();
@@ -91,8 +93,8 @@ img.addEventListener('load', () => {
       SPRITE_H,
       START_X + pX,
       START_Y + pY,
-      48,
-      48,
+      SPRITE_W,
+      SPRITE_H,
     );
   }, 120);
 });
