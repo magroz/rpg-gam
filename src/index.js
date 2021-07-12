@@ -5,9 +5,9 @@ import './index.scss';
 // import sprites from './configs/sprites';
 import ClientGame from './client/ClientGame';
 
-// window.addEventListener('load', () => {
-//   ClientGame.init({ tagId: 'game' });
-// });
+window.addEventListener('load', () => {
+  ClientGame.init({ tagId: 'game' });
+});
 
 // const canvas = document.getElementById('game');
 // const ctx = canvas.getContext('2d');
