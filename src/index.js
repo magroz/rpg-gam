@@ -32,15 +32,15 @@ window.addEventListener('load', () => {
 // const terrain = document.createElement('img');
 // terrain.src = terrainAtlas;
 //
-terrain.addEventListener('load', () => {
-  const { map } = worldCfg;
-  map.forEach((cfgRow, y) => {
-    cfgRow.forEach((cfgCell, x) => {
-      const [sX, sY, sW, sH] = sprites.terrain[cfgCell[0]].frames[0];
-      ctx.drawImage(terrain, sX, sY, sW, sH, x * SPRITE_W, y * SPRITE_H, SPRITE_W, SPRITE_H);
-    });
-  });
-});
+// terrain.addEventListener('load', () => {
+//   const { map } = worldCfg;
+//   map.forEach((cfgRow, y) => {
+//     cfgRow.forEach((cfgCell, x) => {
+//       const [sX, sY, sW, sH] = sprites.terrain[cfgCell[0]].frames[0];
+//       ctx.drawImage(terrain, sX, sY, sW, sH, x * SPRITE_W, y * SPRITE_H, SPRITE_W, SPRITE_H);
+//     });
+//   });
+// });
 
 // const img = document.createElement('img');
 // img.src = RedHeadWalk;
