@@ -10,13 +10,20 @@ class ClientsWorld {
   }
 
   init() {
-    this.engine.renderSpriteFrame({
-      sprite: ['terrain', 'wall'],
-      frame: 0,
-      x: 0,
-      y: 0,
-      w: 48,
-      h: 48,
+    const { map } = this.levelCfg;
+    const spriteW = 48;
+    const spriteH = 48;
+    map.forEach((cfgRow, y) => {
+      cfgRow.forEach((cfgCell, x) => {
+        this.engine.renderSpriteFrame({
+          sprite: ['terrain', cfgCell[0]],
+          frame: 0,
+          x: x * spriteW,
+          y: y * spriteH,
+          w: spriteW,
+          h: spriteH,
+        });
+      });
     });
   }
 }

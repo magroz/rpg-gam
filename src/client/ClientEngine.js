@@ -2,8 +2,6 @@ import EventSourceMixin from '../common/EventSourceMixin.js/EventSourceMixin';
 
 class ClientEngine {
   constructor(canvas) {
-    console.log(canvas);
-
     Object.assign(this, {
       canvas,
       ctx: null,
@@ -39,7 +37,6 @@ class ClientEngine {
 
     for (const groupName in spritesGroup) {
       if (Object.prototype.hasOwnProperty.call(spritesGroup, groupName)) {
-        console.log('####: groupName', groupName);
         const group = spritesGroup[groupName];
         this.sprites[groupName] = group;
 

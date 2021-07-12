@@ -1,15 +1,15 @@
 module.exports = {
   env: {
     browser: true,
-    es2021: true,
+    es2021: true
   },
-  extends: ['airbnb-base'],
+  extends: ["airbnb-base"],
   parserOptions: {
     ecmaVersion: 12,
-    sourceType: 'module',
+    sourceType: "module"
   },
   rules: {
-    'no-restricted-syntax': 'off',
-    'object-curly-newline': 'off',
-  },
+    "no-restricted-syntax": "off",
+    "object-curly-newline": "off",
+  }
 };

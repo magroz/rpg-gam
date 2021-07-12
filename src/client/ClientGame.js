@@ -9,7 +9,7 @@ class ClientGame {
     Object.assign(this, { cfg });
 
     this.engine = this.createEngine();
-    this.map = this.createWorld();
+    this.world = this.createWorld();
     this.initEngine();
   }
 
@@ -24,7 +24,7 @@ class ClientGame {
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
       this.engine.on('render', () => {
-        this.map.init();
+        this.world.init();
       });
       this.engine.start();
     });
