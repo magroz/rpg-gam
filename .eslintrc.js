@@ -11,5 +11,10 @@ module.exports = {
   rules: {
     'no-restricted-syntax': 'off',
     'object-curly-newline': 'off',
+    'no-plusplus': 'off',
+    'no-unused-vars': 'off',
+    'no-unused-expressions': 'off',
+    'max-len': 'off',
+    camelcase: 'off',
   },
 };
