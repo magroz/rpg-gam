@@ -19,17 +19,22 @@ class ClientGame {
   }
 
   createEngine() {
-    return new ClientEngine(document.getElementById(this.cfg.tagId));
+    return new ClientEngine(document.getElementById(this.cfg.tagId), this);
   }
 
   createWorld() {
     return new ClientsWorld(this, this.engine, levelCfg);
   }
 
+  getWorld() {
+    return this.world;
+  }
+
   initEngine() {
     this.engine.loadSprites(sprites).then(() => {
       this.world.init();
       this.engine.on('render', (_, time) => {
+        this.engine.camera.focusAtGameObject(this.player);
         this.world.render(time);
       });
       this.engine.start();
@@ -37,48 +42,34 @@ class ClientGame {
     });
   }
 
-  movePlayer(x, y) {
-    this.player.moveByCellCoord(x, y, (cell) => cell.findObjectsByType('grass').length);
-  }
+  movePlayerToDir(dir) {
+    const dirs = {
+      left: [-1, 0],
+      right: [1, 0],
+      up: [0, -1],
+      down: [0, 1],
+    };
+    const { player } = this;
+    if (player && player.motionProgress === 1) {
+      const canMovie = player.moveByCellCoord(
+        dirs[dir][0],
+        dirs[dir][1],
+        (cell) => cell.findObjectsByType('grass').length,
+      );
 
-  moveLeft() {
-    this.movePlayer(-1, 0);
-  }
-
-  moveRight() {
-    this.movePlayer(1, 0);
-  }
-
-  moveUp() {
-    this.movePlayer(0, -1);
-  }
-
-  moveDown() {
-    this.movePlayer(0, 1);
+      if (canMovie) {
+        player.setState(dir);
+        player.once('motion-stopped', () => player.setState('main'));
+      }
+    }
   }
 
   initKeys() {
     this.engine.input.onKey({
-      ArrowLeft: (keydown) => {
-        if (keydown) {
-          this.moveLeft();
-        }
-      },
-      ArrowRight: (keydown) => {
-        if (keydown) {
-          this.moveRight();
-        }
-      },
-      ArrowUp: (keydown) => {
-        if (keydown) {
-          this.moveUp();
-        }
-      },
-      ArrowDown: (keydown) => {
-        if (keydown) {
-          this.moveDown();
-        }
-      },
+      ArrowLeft: (keydown) => keydown && this.movePlayerToDir('left'),
+      ArrowRight: (keydown) => keydown && this.movePlayerToDir('right'),
+      ArrowUp: (keydown) => keydown && this.movePlayerToDir('up'),
+      ArrowDown: (keydown) => keydown && this.movePlayerToDir('down'),
     });
   }
 

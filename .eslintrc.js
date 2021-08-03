@@ -16,5 +16,8 @@ module.exports = {
     'no-unused-expressions': 'off',
     'max-len': 'off',
     camelcase: 'off',
+    'implicit-arrow-linebreak': 'off',
+    'function-paren-newline': 'off',
+    'no-return-assign': 'off',
   },
 };
