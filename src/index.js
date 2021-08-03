@@ -1,13 +1,13 @@
-import './index.scss';
+import './index.scss'
 // import RedHeadWalk from './assets/Female-2-Walk.png';
 // import terrainAtlas from './assets/terrain.png';
 // import worldCfg from './configs/world.json';
 // import sprites from './configs/sprites';
-import ClientGame from './client/ClientGame';
+import ClientGame from './client/ClientGame'
 
 window.addEventListener('load', () => {
-  ClientGame.init({ tagId: 'game' });
-});
+  ClientGame.init({ tagId: 'game' })
+})
 
 // const canvas = document.getElementById('game');
 // const ctx = canvas.getContext('2d');

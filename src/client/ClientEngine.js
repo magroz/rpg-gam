@@ -1,11 +1,14 @@
-import EventSourceMixin from '../common/EventSourceMixin';
-import ClientCamera from './ClientCamera';
-import ClientInput from './ClientInput';
+import EventSourceMixin from '../common/EventSourceMixin'
+import ClientCamera from './ClientCamera'
+import ClientInput from './ClientInput'
 
 class ClientEngine {
   constructor(canvas, game) {
     Object.assign(this, {
       canvas,
+      canvases: {
+        main: canvas,
+      },
       ctx: null,
       imageLoaders: [],
       sprites: {},
@@ -15,75 +18,86 @@ class ClientEngine {
       game,
       lastRenderTime: 0,
       startTime: 0,
-    });
+    })
 
-    this.ctx = canvas.getContext('2d');
+    this.ctx = canvas.getContext('2d')
 
-    this.loop = this.loop.bind(this);
+    this.loop = this.loop.bind(this)
   }
 
   start() {
-    this.loop();
+    this.loop()
   }
 
   loop(timestamp) {
     if (!this.startTime) {
-      this.startTime = timestamp;
+      this.startTime = timestamp
     }
-    this.lastRenderTime = timestamp;
-    const { ctx, canvas } = this;
-    ctx.fillStyle = 'black';
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    this.lastRenderTime = timestamp
+    const { ctx, canvas } = this
+    ctx.fillStyle = 'black'
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    this.trigger('render', timestamp);
-    this.initNextFrame();
+    this.trigger('render', timestamp)
+    this.initNextFrame()
   }
 
   initNextFrame() {
-    window.requestAnimationFrame(this.loop);
+    window.requestAnimationFrame(this.loop)
   }
 
   loadSprites(spritesGroup) {
-    this.imageLoaders = [];
+    this.imageLoaders = []
 
     for (const groupName in spritesGroup) {
       if (Object.prototype.hasOwnProperty.call(spritesGroup, groupName)) {
-        const group = spritesGroup[groupName];
-        this.sprites[groupName] = group;
+        const group = spritesGroup[groupName]
+        this.sprites[groupName] = group
 
         for (const spriteName in group) {
           if (Object.prototype.hasOwnProperty.call(group, spriteName)) {
-            const { img } = group[spriteName];
+            const { img } = group[spriteName]
             if (!this.images[img]) {
-              this.imageLoaders.push(this.loadImage(img));
+              this.imageLoaders.push(this.loadImage(img))
             }
           }
         }
       }
     }
 
-    return Promise.all(this.imageLoaders);
+    return Promise.all(this.imageLoaders)
   }
 
   loadImage(url) {
     return new Promise((resolve) => {
-      const i = new Image();
-      this.images[url] = i;
-      i.onload = () => resolve(i);
-      i.src = url;
-    });
+      const i = new Image()
+      this.images[url] = i
+      i.onload = () => resolve(i)
+      i.src = url
+    })
   }
 
   renderSpriteFrame({ sprite, frame, x, y, w, h }) {
-    const spriteCfg = this.sprites[sprite[0]][sprite[1]];
-    const [fx, fy, fw, fh] = spriteCfg.frames[frame];
-    const img = this.images[spriteCfg.img];
-    const { camera } = this;
+    const spriteCfg = this.sprites[sprite[0]][sprite[1]]
+    const [fx, fy, fw, fh] = spriteCfg.frames[frame]
+    const img = this.images[spriteCfg.img]
+    const { camera } = this
 
-    this.ctx.drawImage(img, fx, fy, fw, fh, x - camera.x, y - camera.y, w, h);
+    this.ctx.drawImage(img, fx, fy, fw, fh, x - camera.x, y - camera.y, w, h)
+  }
+
+  addCanvas(name, width, height) {
+    let canvas = this.canvases[name]
+
+    if (!canvas) {
+      canvas = document.createElement('canvas')
+      canvas.width = width
+      canvas.height = height
+      this.canvases[name] = canvas
+    }
   }
 }
 
-Object.assign(ClientEngine.prototype, EventSourceMixin);
+Object.assign(ClientEngine.prototype, EventSourceMixin)
 
-export default ClientEngine;
+export default ClientEngine

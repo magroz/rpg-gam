@@ -1,10 +1,10 @@
-import PositionedObject from '../common/PositionedObject';
-import ClientGameObject from './ClientGameObject';
+import PositionedObject from '../common/PositionedObject'
+import ClientGameObject from './ClientGameObject'
 
 class ClientCell extends PositionedObject {
   constructor(cfg) {
-    super();
-    const { cellWidth, cellHeight } = cfg.world;
+    super()
+    const { cellWidth, cellHeight } = cfg.world
 
     Object.assign(
       this,
@@ -17,13 +17,13 @@ class ClientCell extends PositionedObject {
         height: cellHeight,
       },
       cfg,
-    );
+    )
 
-    this.initGameObjects();
+    this.initGameObjects()
   }
 
   initGameObjects() {
-    const { cellCfg } = this;
+    const { cellCfg } = this
 
     this.objects = cellCfg.map((layer, layerId) =>
       layer.map(
@@ -34,40 +34,40 @@ class ClientCell extends PositionedObject {
             layerId,
           }),
       ),
-    );
+    )
   }
 
   render(time, layerId) {
-    const { objects } = this;
+    const { objects } = this
 
     if (objects[layerId]) {
-      objects[layerId].forEach((obj) => obj.render(time));
+      objects[layerId].forEach((obj) => obj.render(time))
     }
   }
 
   addGameObject(objToAdd) {
-    const { objects } = this;
+    const { objects } = this
     if (objToAdd.layerId === undefined) {
       // eslint-disable-next-line no-param-reassign
-      objToAdd.layerId = objects.length;
+      objToAdd.layerId = objects.length
     }
     if (!objects[objToAdd.layerId]) {
-      objects[objToAdd.layerId] = [];
+      objects[objToAdd.layerId] = []
     }
-    objects[objToAdd.layerId].push(objToAdd);
+    objects[objToAdd.layerId].push(objToAdd)
   }
 
   removeGameObject(objToRemove) {
-    const { objects } = this;
-    objects.forEach((layer, layerId) => (objects[layerId] = layer.filter((obj) => obj !== objToRemove)));
+    const { objects } = this
+    objects.forEach((layer, layerId) => (objects[layerId] = layer.filter((obj) => obj !== objToRemove)))
   }
 
   findObjectsByType(type) {
-    let foundObjects = [];
+    let foundObjects = []
 
-    this.objects.forEach((layer) => (foundObjects = [...foundObjects, ...layer].filter((obj) => obj.type === type)));
-    return foundObjects;
+    this.objects.forEach((layer) => (foundObjects = [...foundObjects, ...layer].filter((obj) => obj.type === type)))
+    return foundObjects
   }
 }
 
-export default ClientCell;
+export default ClientCell
