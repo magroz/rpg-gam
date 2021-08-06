@@ -19,5 +19,7 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'function-paren-newline': 'off',
     'no-return-assign': 'off',
+    semi: ['off', { beforeStatementContinuationChars: 'always' }],
+    'semi-style': 'off',
   },
 };

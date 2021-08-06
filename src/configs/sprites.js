@@ -1,5 +1,5 @@
-import terrainIMG from '../assets/terrain.png';
-import charactersIMG from '../assets/characters.png';
+import terrainIMG from '../assets/terrain.png'
+import charactersIMG from '../assets/characters.png'
 
 export default {
   terrain: {
@@ -128,4 +128,4 @@ export default {
       ],
     },
   },
-};
+}

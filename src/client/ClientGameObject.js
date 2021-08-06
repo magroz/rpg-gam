@@ -1,18 +1,18 @@
-import MovableObject from '../common/MovableObject';
-import { animateEx } from '../common/util';
+import MovableObject from '../common/MovableObject'
+import { animateEx } from '../common/util'
 
 class ClientGameObject extends MovableObject {
   constructor(cfg) {
-    super();
+    super()
 
-    const { x, y, width, height } = cfg.cell;
+    const { x, y, width, height } = cfg.cell
 
-    const { world } = cfg.cell;
-    const gameObjs = world.game.gameObjects;
-    const objCfg = typeof cfg.objCfg === 'string' ? { type: cfg.objCfg } : cfg.objCfg;
+    const { world } = cfg.cell
+    const gameObjs = world.game.gameObjects
+    const objCfg = typeof cfg.objCfg === 'string' ? { type: cfg.objCfg } : cfg.objCfg
 
     if (objCfg.player) {
-      world.game.setPlayer(this);
+      world.game.setPlayer(this)
     }
 
     Object.assign(
@@ -31,31 +31,31 @@ class ClientGameObject extends MovableObject {
         animationStartTime: 0,
       },
       cfg,
-    );
+    )
   }
 
   moveByCellCoord(dcol, drow, conditionCallback = null) {
-    const { cell } = this;
-    return this.moveToCellCoord(cell.cellCol + dcol, cell.cellRow + drow, conditionCallback);
+    const { cell } = this
+    return this.moveToCellCoord(cell.cellCol + dcol, cell.cellRow + drow, conditionCallback)
   }
 
   moveToCellCoord(dcol, drow, conditionCallback = null) {
-    const { world } = this;
-    const newCell = world.cellAt(dcol, drow);
-    const canMovie = !conditionCallback || conditionCallback(newCell);
+    const { world } = this
+    const newCell = world.cellAt(dcol, drow)
+    const canMovie = !conditionCallback || conditionCallback(newCell)
 
-    if (canMovie) this.setCell(newCell);
+    if (canMovie) this.setCell(newCell)
 
-    return canMovie;
+    return canMovie
   }
 
   setCell(newCell) {
     if (newCell) {
-      this.detouch();
-      this.cell = newCell;
-      newCell.addGameObject(this);
+      this.detouch()
+      this.cell = newCell
+      newCell.addGameObject(this)
 
-      this.moveTo(newCell.x, newCell.y, true, 200);
+      this.moveTo(newCell.x, newCell.y, true, 200)
 
       // const { x, y, width, height } = newCell;
       // Object.assign(this, { x, y, width, height });
@@ -63,42 +63,42 @@ class ClientGameObject extends MovableObject {
   }
 
   setState(state) {
-    this.state = state;
+    this.state = state
 
     if (this.world) {
-      this.animationStartTime = this.world.engine.lastRenderTime;
+      this.animationStartTime = this.world.engine.lastRenderTime
     }
   }
 
   getCurrentFrame(time) {
-    const state = this.spriteCfg.states[this.state];
-    const lengthFrame = state.frames.length;
-    const animate = animateEx(lengthFrame, this.animationStartTime, time, state.duration, true);
+    const state = this.spriteCfg.states[this.state]
+    const lengthFrame = state.frames.length
+    const animate = animateEx(lengthFrame, this.animationStartTime, time, state.duration, true)
     // eslint-disable-next-line no-bitwise
-    const frame = ((lengthFrame + animate.offset) | 0) % lengthFrame;
+    const frame = ((lengthFrame + animate.offset) | 0) % lengthFrame
 
-    return state.frames[frame];
+    return state.frames[frame]
   }
 
   render(time) {
-    super.render(time);
+    super.render(time)
 
-    const { x, y, width, height, world } = this;
-    const { engine } = world;
+    const { x, y, width, height, world } = this
+    const { engine } = world
 
-    const { sprite, frame, states, type } = this.spriteCfg;
+    const { sprite, frame, states, type } = this.spriteCfg
 
-    const spriteFrame = type === 'static' ? frame : this.getCurrentFrame(time);
+    const spriteFrame = type === 'static' ? frame : this.getCurrentFrame(time)
 
-    engine.renderSpriteFrame({ sprite, frame: spriteFrame, x, y, w: width, h: height });
+    engine.renderSpriteFrame({ sprite, frame: spriteFrame, x, y, w: width, h: height })
   }
 
   detouch() {
     if (this.cell) {
-      this.cell.removeGameObject(this);
-      this.cell = null;
+      this.cell.removeGameObject(this)
+      this.cell = null
     }
   }
 }
 
-export default ClientGameObject;
+export default ClientGameObject

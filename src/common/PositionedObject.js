@@ -1,4 +1,4 @@
-import EventSourceMixin from './EventSourceMixin';
+import EventSourceMixin from './EventSourceMixin'
 
 class PositionedObject {
   constructor(cfg) {
@@ -12,7 +12,7 @@ class PositionedObject {
         height: 0,
       },
       cfg,
-    );
+    )
   }
 
   /**
@@ -24,12 +24,12 @@ class PositionedObject {
     return {
       x: this.x + (this.width * offset_percent_x) / 100,
       y: this.y + (this.height * offset_percent_y) / 100,
-    };
+    }
   }
 
   worldBounds() {
-    const { x, y, width, height } = this;
-    return { x, y, width, height };
+    const { x, y, width, height } = this
+    return { x, y, width, height }
   }
 
   /**
@@ -38,15 +38,15 @@ class PositionedObject {
    * @param {int} offset_percent_y Сдвиг относительно верхнего левого угла в процентах от размера объекта
    */
   canvasPosition(offset_percent_x = 0, offset_percent_y = 0) {
-    const pos = this.worldPosition(offset_percent_x, offset_percent_y);
+    const pos = this.worldPosition(offset_percent_x, offset_percent_y)
 
     return {
       x: pos.x,
       y: pos.y,
-    };
+    }
   }
 }
 
-Object.assign(PositionedObject.prototype, EventSourceMixin);
+Object.assign(PositionedObject.prototype, EventSourceMixin)
 
-export default PositionedObject;
+export default PositionedObject

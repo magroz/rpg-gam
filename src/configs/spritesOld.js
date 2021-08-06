@@ -1,4 +1,4 @@
-import terrainIMG from '../assets/terrain.png';
+import terrainIMG from '../assets/terrain.png'
 
 export default {
   terrain: {
@@ -23,4 +23,4 @@ export default {
       frames: [[896, 576, 64, 64]],
     },
   },
-};
+}

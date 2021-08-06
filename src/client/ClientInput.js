@@ -1,4 +1,4 @@
-import EventSourceMixin from '../common/EventSourceMixin';
+import EventSourceMixin from '../common/EventSourceMixin'
 
 class ClientInput {
   constructor(canvas) {
@@ -7,28 +7,28 @@ class ClientInput {
       keysPressed: new Set(), // клавиши, зажатые в данный момент
       keyStateHandlers: {}, // обработчики, срабатывающие каждый рендер, если нажата клавиша
       keyHandlers: {}, // обработчики при нажатии определенной клавиши
-    });
-    canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false);
-    canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false);
+    })
+    canvas.addEventListener('keydown', (e) => this.onKeyDown(e), false)
+    canvas.addEventListener('keyup', (e) => this.onKeyUp(e), false)
   }
 
   onKeyDown(e) {
-    this.keysPressed.add(e.code);
-    this.keyHandlers[e.code]?.(true);
-    this.trigger('keydown', e);
+    this.keysPressed.add(e.code)
+    this.keyHandlers[e.code]?.(true)
+    this.trigger('keydown', e)
   }
 
   onKeyUp(e) {
-    this.keysPressed.delete(e.code);
-    this.keyHandlers[e.code]?.(false);
-    this.trigger('keyup', e);
+    this.keysPressed.delete(e.code)
+    this.keyHandlers[e.code]?.(false)
+    this.trigger('keyup', e)
   }
 
   onKey({ ...handlers }) {
-    this.keyHandlers = { ...this.keyHandlers, ...handlers };
+    this.keyHandlers = { ...this.keyHandlers, ...handlers }
   }
 }
 
-Object.assign(ClientInput.prototype, EventSourceMixin);
+Object.assign(ClientInput.prototype, EventSourceMixin)
 
-export default ClientInput;
+export default ClientInput
